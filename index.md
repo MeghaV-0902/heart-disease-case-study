@@ -547,13 +547,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     dataset.forEach(row => {
         const value = Number(row[featureIndex]);
-        const target = row[targetIndex];
+        const target = Number(row[targetIndex]);
 
-        if (target === "0") {
-            group0.push(value);
-        } else {
-            group1.push(value);
-        }
+if (target === 0) {
+    group0.push(value);
+} else if (target === 1) {
+    group1.push(value);
+}
     });
 
     var trace0 = {
