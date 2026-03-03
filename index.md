@@ -82,62 +82,52 @@ This validation step ensured that the dataset was clinically reliable before pro
 <details>
 <summary><strong>Click to Expand EDA</strong></summary>
 
-### Univariate Analysis
+<h3>Univariate Analysis</h3>
 
-Initial analysis focused on understanding the distribution of key numerical features.
+<p>Initial analysis focused on understanding the distribution of key numerical features.</p>
 
-```python
+<pre><code class="language-python">
 df.describe()
-```
+</code></pre>
 
-Key numerical features examined:
+<p><strong>Key Observations:</strong></p>
+<ul>
+<li>Age distribution centered around middle-aged individuals.</li>
+<li>Cholesterol showed mild right skew.</li>
+<li>ST depression values were concentrated near lower ranges.</li>
+<li>Number of major vessels showed separation patterns relevant to disease presence.</li>
+</ul>
 
-- age  
-- resting_blood_pressure  
-- serum_cholesterol_mg_per_dl  
-- max_heart_rate_achieved  
-- oldpeak_eq_st_depression  
-- num_major_vessels  
+<hr>
 
-#### Observations
+<h3>Bivariate Analysis</h3>
 
-- Age distribution centered around middle-aged individuals.  
-- Cholesterol showed mild right skew.  
-- ST depression values were concentrated near lower ranges.  
-- Number of major vessels showed separation patterns relevant to disease presence.
+<p>The relationship between features and the target variable <code>heart_disease_present</code> was analyzed.</p>
 
----
-
-### Bivariate Analysis
-
-The relationship between individual features and the target variable `heart_disease_present` was analyzed.
-
-```python
+<pre><code class="language-python">
 df.groupby("heart_disease_present").mean()
-```
+</code></pre>
 
-#### Observations
+<ul>
+<li>Higher values of <code>num_major_vessels</code> were strongly associated with heart disease.</li>
+<li>Exercise-induced angina showed a clear relationship with positive cases.</li>
+<li>ST depression demonstrated predictive behavior.</li>
+<li>Maximum heart rate tended to be lower among patients with heart disease.</li>
+</ul>
 
-- Higher values of `num_major_vessels` were strongly associated with heart disease.  
-- Exercise-induced angina showed a clear relationship with positive cases.  
-- ST depression demonstrated predictive behavior.  
-- Maximum heart rate tended to be lower among patients with heart disease.
+<hr>
 
----
+<h3>Correlation Analysis</h3>
 
-### Correlation Analysis
-
-Correlation matrix was used to identify linear relationships between features.
-
-```python
+<pre><code class="language-python">
 df.corr()
-```
+</code></pre>
 
-#### Observations
-
-- `num_major_vessels` showed strong positive correlation with the target.  
-- ST depression had moderate correlation.  
-- Most features showed low multicollinearity, reducing risk of instability in Logistic Regression.
+<ul>
+<li><code>num_major_vessels</code> showed strong positive correlation with the target.</li>
+<li>ST depression had moderate correlation.</li>
+<li>Most features showed low multicollinearity, reducing risk of instability in Logistic Regression.</li>
+</ul>
 
 </details>
 
@@ -239,6 +229,7 @@ Performance remained strong across different data splits.
 Although metrics slightly decreased, ROC-AUC remained high, indicating the model generalizes reasonably well.
 
 This confirms that the baseline model performance was not due to a favorable train-test split.
+
 ---
 
 ### Threshold Tuning
