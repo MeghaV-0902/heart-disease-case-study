@@ -113,9 +113,6 @@ df.describe()
 <hr>
 
 <h3>Bivariate Analysis</h3>
-<hr>
-
-<h3>Bivariate Analysis</h3>
 
 <label for="bivariateSelect"><strong>Select Feature:</strong></label>
 <select id="bivariateSelect">
