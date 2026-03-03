@@ -79,7 +79,7 @@ This validation step ensured that the dataset was clinically reliable before pro
 
 ## Exploratory Data Analysis
 
-<details>
+<details id="edaSection">
 <summary><strong>Click to Expand EDA</strong></summary>
 
 <h3>Univariate Analysis</h3>
@@ -484,7 +484,7 @@ The project reinforces the value of structured analysis, model validation, and d
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const edaSection = document.querySelector("details");
+    const edaSection = document.getElementById("edaSection");
     let rendered = false;
 
     edaSection.addEventListener("toggle", function () {
@@ -497,7 +497,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const rows = data.trim().split("\n");
                     const headers = rows[0].split(",");
-                    const dataset = rows.slice(1).map(row => row.split(","));
+                    const dataset = rows
+    .slice(1)
+    .filter(row => row.trim() !== "")
+    .map(row => row.replace("\r", "").split(","));
 
                     function plotFeature(featureName) {
 
@@ -531,7 +534,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             bargap: 0.05
                         };
 
-                        Plotly.newPlot("univariateChart", [trace], layout);
+                        if (document.getElementById("univariateChart")) {
+    Plotly.newPlot("univariateChart", [trace], layout);
+}
                     }
 
                     function plotBivariate(featureName) {
@@ -570,7 +575,9 @@ if (target === 0) {
         yaxis: { title: featureName }
     };
 
+   if (document.getElementById("bivariateChart")) {
     Plotly.newPlot("bivariateChart", [trace0, trace1], layout);
+}
 }
 
                     const dropdown = document.getElementById("featureSelect");
