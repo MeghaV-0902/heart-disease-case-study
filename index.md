@@ -113,6 +113,21 @@ df.describe()
 <hr>
 
 <h3>Bivariate Analysis</h3>
+<hr>
+
+<h3>Bivariate Analysis</h3>
+
+<label for="bivariateSelect"><strong>Select Feature:</strong></label>
+<select id="bivariateSelect">
+    <option value="age">age</option>
+    <option value="resting_blood_pressure">resting_blood_pressure</option>
+    <option value="serum_cholesterol_mg_per_dl">serum_cholesterol_mg_per_dl</option>
+    <option value="max_heart_rate_achieved">max_heart_rate_achieved</option>
+    <option value="oldpeak_eq_st_depression">oldpeak_eq_st_depression</option>
+    <option value="num_major_vessels">num_major_vessels</option>
+</select>
+
+<div id="bivariateChart" style="margin-top:25px;"></div>
 
 <p>The relationship between features and the target variable <code>heart_disease_present</code> was analyzed.</p>
 
@@ -522,11 +537,57 @@ document.addEventListener("DOMContentLoaded", function () {
                         Plotly.newPlot("univariateChart", [trace], layout);
                     }
 
+                    function plotBivariate(featureName) {
+
+    const featureIndex = headers.indexOf(featureName);
+    const targetIndex = headers.indexOf("heart_disease_present");
+
+    const group0 = [];
+    const group1 = [];
+
+    dataset.forEach(row => {
+        const value = Number(row[featureIndex]);
+        const target = row[targetIndex];
+
+        if (target === "0") {
+            group0.push(value);
+        } else {
+            group1.push(value);
+        }
+    });
+
+    var trace0 = {
+        y: group0,
+        type: "box",
+        name: "No Heart Disease (0)"
+    };
+
+    var trace1 = {
+        y: group1,
+        type: "box",
+        name: "Heart Disease (1)"
+    };
+
+    var layout = {
+        title: featureName + " vs Heart Disease",
+        yaxis: { title: featureName }
+    };
+
+    Plotly.newPlot("bivariateChart", [trace0, trace1], layout);
+}
+
                     const dropdown = document.getElementById("featureSelect");
 
                     dropdown.addEventListener("change", function () {
                         plotFeature(this.value);
                     });
+                    const bivariateDropdown = document.getElementById("bivariateSelect");
+
+bivariateDropdown.addEventListener("change", function () {
+    plotBivariate(this.value);
+});
+
+plotBivariate(bivariateDropdown.value);
 
                     plotFeature(dropdown.value);
 
