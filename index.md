@@ -83,7 +83,18 @@ This validation step ensured that the dataset was clinically reliable before pro
 <summary><strong>Click to Expand EDA</strong></summary>
 
 <h3>Univariate Analysis</h3>
-<div id="ageHistogram" style="margin-top:30px;"></div>
+
+<label for="featureSelect"><strong>Select Feature:</strong></label>
+<select id="featureSelect">
+    <option value="age">age</option>
+    <option value="resting_blood_pressure">resting_blood_pressure</option>
+    <option value="serum_cholesterol_mg_per_dl">serum_cholesterol_mg_per_dl</option>
+    <option value="max_heart_rate_achieved">max_heart_rate_achieved</option>
+    <option value="oldpeak_eq_st_depression">oldpeak_eq_st_depression</option>
+    <option value="num_major_vessels">num_major_vessels</option>
+</select>
+
+<div id="univariateChart" style="margin-top:25px;"></div>
 
 <p>Initial analysis focused on understanding the distribution of key numerical features.</p>
 
@@ -464,36 +475,58 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("assets/data/heart_cleaned.csv")
         .then(response => response.text())
         .then(data => {
-            const rows = data.split("\n").slice(1);
-            const ageIndex = 6; // age column index
 
-            const ages = rows
-                .map(row => row.split(",")[ageIndex])
-                .filter(val => val !== "")
-                .map(Number);
+            const rows = data.trim().split("\n");
+            const headers = rows[0].split(",");
+            const dataset = rows.slice(1).map(row => row.split(","));
 
-            var trace = {
-    x: ages,
-    type: "histogram",
-    xbins: {
-        size: 5 
-    },
-    marker: { color: "#3b82f6" }
-};
+            function plotFeature(featureName) {
 
-            var layout = {
-    title: "Age Distribution",
-    xaxis: { 
-        title: "Age",
-        dtick: 5
-    },
-    yaxis: { 
-        title: "Count"
-    },
-    bargap: 0.05
-};
+                const colIndex = headers.indexOf(featureName);
 
-            Plotly.newPlot("ageHistogram", [trace], layout);
+                const values = dataset
+                    .map(row => row[colIndex])
+                    .filter(val => val !== "")
+                    .map(Number);
+
+                let binSize = 5;
+
+                if (featureName === "oldpeak_eq_st_depression") {
+                    binSize = 0.5;
+                }
+
+                if (featureName === "num_major_vessels") {
+                    binSize = 1;
+                }
+
+                var trace = {
+                    x: values,
+                    type: "histogram",
+                    xbins: { size: binSize }
+                };
+
+                var layout = {
+                    title: featureName + " Distribution",
+                    xaxis: { 
+                        title: featureName
+                    },
+                    yaxis: { 
+                        title: "Count"
+                    },
+                    bargap: 0.05
+                };
+
+                Plotly.newPlot("univariateChart", [trace], layout);
+            }
+
+            const dropdown = document.getElementById("featureSelect");
+
+            dropdown.addEventListener("change", function () {
+                plotFeature(this.value);
+            });
+
+            // Initial render
+            plotFeature(dropdown.value);
         });
 
 });
