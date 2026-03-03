@@ -473,16 +473,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 .map(Number);
 
             var trace = {
-                x: ages,
-                type: "histogram",
-                marker: { color: "#3b82f6" }
-            };
+    x: ages,
+    type: "histogram",
+    xbins: {
+        size: 5 
+    },
+    marker: { color: "#3b82f6" }
+};
 
             var layout = {
-                title: "Age Distribution",
-                xaxis: { title: "Age" },
-                yaxis: { title: "Count" }
-            };
+    title: "Age Distribution",
+    xaxis: { 
+        title: "Age",
+        dtick: 5
+    },
+    yaxis: { 
+        title: "Count"
+    },
+    bargap: 0.05
+};
 
             Plotly.newPlot("ageHistogram", [trace], layout);
         });
