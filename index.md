@@ -141,11 +141,7 @@ df.groupby("heart_disease_present").mean()
 
 <hr>
 
-<h3>Correlation Analysis</h3>
-<hr>
-
 <h3>Correlation Heatmap</h3>
-
 <div id="correlationChart" style="margin-top:25px;"></div>
 
 <pre><code class="language-python">
@@ -582,52 +578,60 @@ document.addEventListener("DOMContentLoaded", function () {
                        CORRELATION HEATMAP
                     ======================= */
 
-                    function plotCorrelation() {
-
-                        const numericData = dataset.map(row =>
-                            row.map(val => Number(val))
-                        );
-
+                   function plotCorrelation() {
+                    
+                        const importantCols = [
+                            "age",
+                            "resting_blood_pressure",
+                            "serum_cholesterol_mg_per_dl",
+                            "max_heart_rate_achieved",
+                            "oldpeak_eq_st_depression",
+                            "num_major_vessels",
+                            "heart_disease_present"
+                        ];
+                    
+                        const indices = importantCols.map(col => headers.indexOf(col));
+                    
                         const matrix = [];
-
-                        for (let i = 0; i < headers.length; i++) {
+                    
+                        for (let i = 0; i < indices.length; i++) {
                             matrix[i] = [];
-                            for (let j = 0; j < headers.length; j++) {
-
-                                let xi = numericData.map(r => r[i]);
-                                let xj = numericData.map(r => r[j]);
-
+                            for (let j = 0; j < indices.length; j++) {
+                    
+                                let xi = dataset.map(r => Number(r[indices[i]]));
+                                let xj = dataset.map(r => Number(r[indices[j]]));
+                    
                                 let meanXi = xi.reduce((a,b)=>a+b)/xi.length;
                                 let meanXj = xj.reduce((a,b)=>a+b)/xj.length;
-
+                    
                                 let numerator = 0;
                                 let denomXi = 0;
                                 let denomXj = 0;
-
+                    
                                 for (let k=0; k<xi.length; k++){
                                     numerator += (xi[k]-meanXi)*(xj[k]-meanXj);
                                     denomXi += Math.pow(xi[k]-meanXi,2);
                                     denomXj += Math.pow(xj[k]-meanXj,2);
                                 }
-
+                    
                                 matrix[i][j] = numerator / Math.sqrt(denomXi * denomXj);
                             }
                         }
-
+                    
                         Plotly.newPlot("correlationChart", [{
                             z: matrix,
-                            x: headers,
-                            y: headers,
+                            x: importantCols,
+                            y: importantCols,
                             type: "heatmap",
                             colorscale: "RdBu",
                             zmin: -1,
                             zmax: 1
                         }], {
                             title: "Correlation Heatmap",
-                            height: 650
+                            height: 600,
+                            margin: { l: 120 }
                         });
                     }
-
                     /* ======================
                        DROPDOWN LISTENERS
                     ======================= */
@@ -706,14 +710,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const headers = data.trim().split("\n")[0].split(",");
 
-            Plotly.newPlot("featureImportanceChart", [{
+                Plotly.newPlot("featureImportanceChart", [{
                 x: importanceValues,
                 y: headers.slice(0,18),
                 type: "bar",
                 orientation: "h"
             }], {
                 title: "Feature Importance",
-                height: 650
+                height: 700,
+                margin: { l: 200 },   // <-- THIS FIXES CUT LABELS
+                yaxis: { automargin: true }
             });
         });
 
