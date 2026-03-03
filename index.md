@@ -472,62 +472,68 @@ The project reinforces the value of structured analysis, model validation, and d
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    fetch("assets/data/heart_cleaned.csv")
-        .then(response => response.text())
-        .then(data => {
+    const edaSection = document.querySelector("details");
+    let rendered = false;
 
-            const rows = data.trim().split("\n");
-            const headers = rows[0].split(",");
-            const dataset = rows.slice(1).map(row => row.split(","));
+    edaSection.addEventListener("toggle", function () {
 
-            function plotFeature(featureName) {
+        if (edaSection.open && !rendered) {
 
-                const colIndex = headers.indexOf(featureName);
+            fetch("assets/data/heart_cleaned.csv")
+                .then(response => response.text())
+                .then(data => {
 
-                const values = dataset
-                    .map(row => row[colIndex])
-                    .filter(val => val !== "")
-                    .map(Number);
+                    const rows = data.trim().split("\n");
+                    const headers = rows[0].split(",");
+                    const dataset = rows.slice(1).map(row => row.split(","));
 
-                let binSize = 5;
+                    function plotFeature(featureName) {
 
-                if (featureName === "oldpeak_eq_st_depression") {
-                    binSize = 0.5;
-                }
+                        const colIndex = headers.indexOf(featureName);
 
-                if (featureName === "num_major_vessels") {
-                    binSize = 1;
-                }
+                        const values = dataset
+                            .map(row => row[colIndex])
+                            .filter(val => val !== "")
+                            .map(Number);
 
-                var trace = {
-                    x: values,
-                    type: "histogram",
-                    xbins: { size: binSize }
-                };
+                        let binSize = 5;
 
-                var layout = {
-                    title: featureName + " Distribution",
-                    xaxis: { 
-                        title: featureName
-                    },
-                    yaxis: { 
-                        title: "Count"
-                    },
-                    bargap: 0.05
-                };
+                        if (featureName === "oldpeak_eq_st_depression") {
+                            binSize = 0.5;
+                        }
 
-                Plotly.newPlot("univariateChart", [trace], layout);
-            }
+                        if (featureName === "num_major_vessels") {
+                            binSize = 1;
+                        }
 
-            const dropdown = document.getElementById("featureSelect");
+                        var trace = {
+                            x: values,
+                            type: "histogram",
+                            xbins: { size: binSize }
+                        };
 
-            dropdown.addEventListener("change", function () {
-                plotFeature(this.value);
-            });
+                        var layout = {
+                            title: featureName + " Distribution",
+                            xaxis: { title: featureName },
+                            yaxis: { title: "Count" },
+                            bargap: 0.05
+                        };
 
-            // Initial render
-            plotFeature(dropdown.value);
-        });
+                        Plotly.newPlot("univariateChart", [trace], layout);
+                    }
+
+                    const dropdown = document.getElementById("featureSelect");
+
+                    dropdown.addEventListener("change", function () {
+                        plotFeature(this.value);
+                    });
+
+                    plotFeature(dropdown.value);
+
+                    rendered = true;
+                });
+        }
+    });
 
 });
 </script>
