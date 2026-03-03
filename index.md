@@ -239,9 +239,6 @@ Performance remained strong across different data splits.
 Although metrics slightly decreased, ROC-AUC remained high, indicating the model generalizes reasonably well.
 
 This confirms that the baseline model performance was not due to a favorable train-test split.
-
----
-
 ---
 
 ### Threshold Tuning
