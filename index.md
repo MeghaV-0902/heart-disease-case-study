@@ -83,6 +83,7 @@ This validation step ensured that the dataset was clinically reliable before pro
 <summary><strong>Click to Expand EDA</strong></summary>
 
 <h3>Univariate Analysis</h3>
+<div id="ageHistogram" style="margin-top:30px;"></div>
 
 <p>Initial analysis focused on understanding the distribution of key numerical features.</p>
 
@@ -457,3 +458,34 @@ In this healthcare context, Logistic Regression provided:
 
 The project reinforces the value of structured analysis, model validation, and domain-aware decision-making in medical predictive modeling.
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    fetch("assets/data/heart_cleaned.csv")
+        .then(response => response.text())
+        .then(data => {
+            const rows = data.split("\n").slice(1);
+            const ageIndex = 6; // age column index
+
+            const ages = rows
+                .map(row => row.split(",")[ageIndex])
+                .filter(val => val !== "")
+                .map(Number);
+
+            var trace = {
+                x: ages,
+                type: "histogram",
+                marker: { color: "#3b82f6" }
+            };
+
+            var layout = {
+                title: "Age Distribution",
+                xaxis: { title: "Age" },
+                yaxis: { title: "Count" }
+            };
+
+            Plotly.newPlot("ageHistogram", [trace], layout);
+        });
+
+});
+</script>
