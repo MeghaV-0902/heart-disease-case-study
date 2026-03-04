@@ -11,7 +11,7 @@ title: Heart Disease Prediction
 
 **Tech Stack:** Python, Scikit-Learn, Plotly, Pandas, NumPy
 
-**Dataset Size:** 180 patients | 18 features
+**Dataset Size:** 180 patients | 15 features
 
 ---
 
@@ -39,13 +39,13 @@ The analysis includes:
 ---
 ## Dataset
 
-- 180 observations  
-- 19 total columns  
-- 18 input features  
+- - 180 observations  
+- 15 original columns  
+- 14 input features  
+- 18 features after one-hot encoding  
 - Target variable: `heart_disease_present`
 
 The dataset includes demographic, clinical, and stress test-related measurements such as:
-
 - age  
 - resting_blood_pressure  
 - serum_cholesterol_mg_per_dl  
@@ -86,10 +86,11 @@ This validation step ensured that the dataset was clinically reliable before pro
 ## Exploratory Data Analysis
 
 <details id="edaSection">
-<summary><strong>Click to Expand EDA</strong></summary>
+<summary><strong>Interactive EDA (Click to Expand)</strong></summary>
 
 <h3>Univariate Analysis</h3>
-
+<p><strong>Interactive Feature Distribution Explorer</strong></p>
+<p>Select a feature to visualize its distribution across the dataset.</p>
 <label for="featureSelect"><strong>Select Feature:</strong></label>
 <select id="featureSelect">
     <option value="age">age</option>
@@ -121,6 +122,8 @@ df.describe()
 <hr>
 
 <h3>Bivariate Analysis</h3>
+<p><strong>Feature vs Target Comparison</strong></p>
+<p>Select a feature to compare its distribution between patients with and without heart disease.</p>
 
 <label for="bivariateSelect"><strong>Select Feature:</strong></label>
 <select id="bivariateSelect">
@@ -395,6 +398,8 @@ Given the small dataset size, the added complexity of boosting did not provide s
 
 ## Model Comparison
 
+The following table summarizes the performance of all evaluated models across key evaluation metrics.
+
 | Model | Accuracy | Precision | Recall | ROC-AUC |
 |-------|----------|-----------|--------|---------|
 | Logistic Regression | 0.89 | 0.80 | 1.00 | 0.96 |
@@ -416,6 +421,7 @@ Given the small dataset size, the added complexity of boosting did not provide s
         <div id="modelChart"></div>
     </div>
 </div>
+
 ---
 
 ### Final Model Selection
@@ -642,8 +648,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             zmax: 1
                         }], {
                             title: "Correlation Heatmap",
-                            height: 600,
-                            margin: { l: 120 }
+                            height: 700,
+                            margin: { l: 140, r: 40, t: 60, b: 140 },
+                            xaxis: { tickangle: -45 }
                         });
                     }
                     /* ======================
@@ -732,7 +739,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }], {
                 title: "Feature Importance",
                 height: 700,
-                margin: { l: 200 },   // <-- THIS FIXES CUT LABELS
+                margin: { l: 220, r: 40, t: 60, b: 40 },
                 yaxis: { automargin: true }
             });
         });
