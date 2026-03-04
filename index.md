@@ -10,7 +10,6 @@ title: Heart Disease Prediction
 This project develops and evaluates multiple machine learning models to predict the presence of heart disease using structured clinical data. The objective is to support early detection and improve preventive healthcare decision-making.
 
 ---
-
 ## Objective
 
 The objective of this project is to build a reliable classification model that predicts the presence of heart disease using demographic and clinical features.
@@ -28,7 +27,6 @@ The analysis includes:
 - Hospital-level recommendations
 
 ---
-
 ## Dataset
 
 - 180 observations  
@@ -48,7 +46,6 @@ The dataset includes demographic, clinical, and stress test-related measurements
 The target variable `heart_disease_present` indicates whether the patient has heart disease.
 
 ---
-
 ## Clinical Range Validation
 
 Before building any predictive models, medical variables were examined to ensure they fall within realistic physiological ranges. Validating clinical data is critical in healthcare projects, as unrealistic values can distort model learning and lead to misleading predictions.
@@ -76,7 +73,6 @@ df.describe()
 This validation step ensured that the dataset was clinically reliable before proceeding to modeling.
 
 ---
-
 ## Exploratory Data Analysis
 
 <details id="edaSection">
@@ -157,7 +153,6 @@ df.corr()
 </details>
 
 ---
-
 ## Data Preprocessing
 
 Before training the models, the dataset was prepared to ensure compatibility with machine learning algorithms.
@@ -185,7 +180,6 @@ The dataset was split into training and testing sets to evaluate generalization 
 No scaling was required for tree-based models, while Logistic Regression handled the feature distributions appropriately for this dataset.
 
 ---
-
 ## Modeling
 
 ### Logistic Regression (Baseline)
