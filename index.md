@@ -5,15 +5,16 @@ title: Heart Disease Prediction
 
 <div class="hero-banner">
 
-# Heart Disease Prediction
+<h1>Heart Disease Prediction</h1>
 
-### Machine Learning Case Study
+<h3>Machine Learning Case Study</h3>
 
-**Goal:** Predict the presence of heart disease using clinical and demographic features.
+<p><strong>Goal:</strong> Predict the presence of heart disease using clinical and demographic features.</p>
 
-**Tech Stack:** Python, Scikit-Learn, Plotly, Pandas, NumPy
+<p><strong>Tech Stack:</strong> Python · Scikit-Learn · Plotly · Pandas · NumPy</p>
 
-**Dataset Size:** 180 patients | 15 features
+<p><strong>Dataset Size:</strong> 180 patients · 15 features</p>
+
 </div>
 
 <div class="jump-nav">
