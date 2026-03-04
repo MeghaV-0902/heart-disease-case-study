@@ -3,532 +3,242 @@ layout: default
 title: Heart Disease Prediction
 ---
 
-<div class="hero-banner">
+<!-- HERO SECTION -->
+
+<section class="hero">
+
+<div class="hero-text">
 
 <h1>Heart Disease Prediction</h1>
 
-<h3>Machine Learning Case Study</h3>
+<h2>Machine Learning Case Study</h2>
 
-<p><strong>Goal:</strong> Predict the presence of heart disease using clinical and demographic features.</p>
+<p class="hero-desc">
+Predicting the presence of heart disease using clinical and demographic data using machine learning models.
+</p>
 
-<p><strong>Tech Stack:</strong> Python · Scikit-Learn · Plotly · Pandas · NumPy</p>
-
-<p><strong>Dataset Size:</strong> 180 patients · 15 features</p>
+<div class="hero-meta">
+<span><strong>Tech:</strong> Python · Scikit-Learn · Plotly · Pandas · NumPy</span>
+<span><strong>Dataset:</strong> 180 Patients · 15 Features</span>
+</div>
 
 </div>
 
-<div class="jump-nav">
+<div class="hero-visual">
+<img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png">
+</div>
+
+</section>
+
+<!-- JUMP NAVIGATION -->
+
+<div class="jump-box">
 <strong>Jump to:</strong>
 <a href="#overview">Overview</a>
 <a href="#dataset">Dataset</a>
-<a href="#exploratory-data-analysis">EDA</a>
+<a href="#eda">EDA</a>
 <a href="#modeling">Modeling</a>
-<a href="#model-comparison">Model Comparison</a>
+<a href="#comparison">Model Comparison</a>
 <a href="#conclusion">Conclusion</a>
 </div>
----
+
+<hr>
 
 ---
 
 ## Overview
+<span id="overview"></span>
 
-This project develops and evaluates multiple machine learning models to predict the presence of heart disease using structured clinical data. The objective is to support early detection and improve preventive healthcare decision-making.
+This project develops and evaluates multiple machine learning models to predict the presence of heart disease using structured clinical data.
+
+The objective is to support **early detection and preventive healthcare decision-making.**
 
 ---
+
 ## Objective
 
-The objective of this project is to build a reliable classification model that predicts the presence of heart disease using demographic and clinical features.
+The goal of this project is to build a reliable classification model that predicts heart disease using clinical and demographic features.
 
 The analysis includes:
 
-- Exploratory Data Analysis (EDA)
-- Clinical range validation of medical variables
-- Data preprocessing and feature engineering
-- Model development using Logistic Regression, Random Forest, and XGBoost
-- Stability validation
-- Threshold tuning
-- Model comparison using Accuracy, Precision, Recall, and ROC-AUC
+- Exploratory Data Analysis
+- Clinical range validation
+- Data preprocessing
+- Model development
+- Model comparison
 - Feature importance interpretation
-- Hospital-level recommendations
 
 ---
+
 ## Dataset
+<span id="dataset"></span>
 
-- - 180 observations  
-- 15 original columns  
-- 14 input features  
-- 18 features after one-hot encoding  
-- Target variable: `heart_disease_present`
+- **180 observations**
+- **15 columns**
+- **14 input features**
+- **18 features after one-hot encoding**
 
-The dataset includes demographic, clinical, and stress test-related measurements such as:
-- age  
-- resting_blood_pressure  
-- serum_cholesterol_mg_per_dl  
-- max_heart_rate_achieved  
-- oldpeak_eq_st_depression  
-- num_major_vessels  
+Target variable: **heart_disease_present**
 
-The target variable `heart_disease_present` indicates whether the patient has heart disease.
+Key variables include:
 
----
-## Clinical Range Validation
-
-Before building any predictive models, medical variables were examined to ensure they fall within realistic physiological ranges. Validating clinical data is critical in healthcare projects, as unrealistic values can distort model learning and lead to misleading predictions.
-
-A statistical summary was first generated:
-
-```python
-df.describe()
-```
-
-### Key Validations Included
-
-- **Resting Blood Pressure:** Checked for extreme low or high values outside normal clinical ranges.  
-- **Serum Cholesterol:** Examined for abnormal outliers that may indicate data entry errors.  
-- **Maximum Heart Rate Achieved:** Compared against age to ensure physiological plausibility.  
-- **ST Depression (`oldpeak_eq_st_depression`):** Validated to confirm values align with stress test expectations.  
-- **Number of Major Vessels:** Confirmed categorical consistency and valid encoding.
-
-### Observations
-
-- No unrealistic physiological anomalies were detected.  
-- No missing values were present in the dataset.  
-- Feature distributions appeared consistent with expected medical ranges.
-
-This validation step ensured that the dataset was clinically reliable before proceeding to modeling.
+- age
+- resting_blood_pressure
+- serum_cholesterol_mg_per_dl
+- max_heart_rate_achieved
+- oldpeak_eq_st_depression
+- num_major_vessels
 
 ---
-## Exploratory Data Analysis
+
+# Exploratory Data Analysis
+<span id="eda"></span>
 
 <details id="edaSection">
-<summary><strong>Interactive EDA (Click to Expand)</strong></summary>
+<summary><strong>Click to Expand EDA</strong></summary>
 
-<h3>Univariate Analysis</h3>
-<p><strong>Interactive Feature Distribution Explorer</strong></p>
-<p>Select a feature to visualize its distribution across the dataset.</p>
-<label for="featureSelect"><strong>Select Feature:</strong></label>
+### Univariate Analysis
+
+<label><strong>Select Feature:</strong></label>
+
 <select id="featureSelect">
-    <option value="age">age</option>
-    <option value="resting_blood_pressure">resting_blood_pressure</option>
-    <option value="serum_cholesterol_mg_per_dl">serum_cholesterol_mg_per_dl</option>
-    <option value="max_heart_rate_achieved">max_heart_rate_achieved</option>
-    <option value="oldpeak_eq_st_depression">oldpeak_eq_st_depression</option>
-    <option value="num_major_vessels">num_major_vessels</option>
+<option value="age">age</option>
+<option value="resting_blood_pressure">resting_blood_pressure</option>
+<option value="serum_cholesterol_mg_per_dl">serum_cholesterol_mg_per_dl</option>
+<option value="max_heart_rate_achieved">max_heart_rate_achieved</option>
+<option value="oldpeak_eq_st_depression">oldpeak_eq_st_depression</option>
+<option value="num_major_vessels">num_major_vessels</option>
 </select>
 
-<div class="chart-box" style="margin-top:25px;">
-    <div id="univariateChart"></div>
+<div class="chart-box">
+<div id="univariateChart"></div>
 </div>
 
-<p>Initial analysis focused on understanding the distribution of key numerical features.</p>
+---
 
-<pre><code class="language-python">
-df.describe()
-</code></pre>
+### Bivariate Analysis
 
-<p><strong>Key Observations:</strong></p>
-<ul>
-<li>Age distribution centered around middle-aged individuals.</li>
-<li>Cholesterol showed mild right skew.</li>
-<li>ST depression values were concentrated near lower ranges.</li>
-<li>Number of major vessels showed separation patterns relevant to disease presence.</li>
-</ul>
+<label><strong>Select Feature:</strong></label>
 
-<hr>
-
-<h3>Bivariate Analysis</h3>
-<p><strong>Feature vs Target Comparison</strong></p>
-<p>Select a feature to compare its distribution between patients with and without heart disease.</p>
-
-<label for="bivariateSelect"><strong>Select Feature:</strong></label>
 <select id="bivariateSelect">
-    <option value="age">age</option>
-    <option value="resting_blood_pressure">resting_blood_pressure</option>
-    <option value="serum_cholesterol_mg_per_dl">serum_cholesterol_mg_per_dl</option>
-    <option value="max_heart_rate_achieved">max_heart_rate_achieved</option>
-    <option value="oldpeak_eq_st_depression">oldpeak_eq_st_depression</option>
-    <option value="num_major_vessels">num_major_vessels</option>
+<option value="age">age</option>
+<option value="resting_blood_pressure">resting_blood_pressure</option>
+<option value="serum_cholesterol_mg_per_dl">serum_cholesterol_mg_per_dl</option>
+<option value="max_heart_rate_achieved">max_heart_rate_achieved</option>
+<option value="oldpeak_eq_st_depression">oldpeak_eq_st_depression</option>
+<option value="num_major_vessels">num_major_vessels</option>
 </select>
 
-<div class="chart-box" style="margin-top:25px;">
-    <div id="bivariateChart"></div>
+<div class="chart-box">
+<div id="bivariateChart"></div>
 </div>
 
-<p>The relationship between features and the target variable <code>heart_disease_present</code> was analyzed.</p>
+---
 
-<pre><code class="language-python">
-df.groupby("heart_disease_present").mean()
-</code></pre>
+### Correlation Heatmap
 
-<ul>
-<li>Higher values of <code>num_major_vessels</code> were strongly associated with heart disease.</li>
-<li>Exercise-induced angina showed a clear relationship with positive cases.</li>
-<li>ST depression demonstrated predictive behavior.</li>
-<li>Maximum heart rate tended to be lower among patients with heart disease.</li>
-</ul>
-
-<hr>
-
-<h3>Correlation Heatmap</h3>
-<div class="chart-box" style="margin-top:25px;">
-    <div id="correlationChart"></div>
+<div class="chart-box">
+<div id="correlationChart"></div>
 </div>
-
-<pre><code class="language-python">
-df.corr()
-</code></pre>
-
-<ul>
-<li><code>num_major_vessels</code> showed strong positive correlation with the target.</li>
-<li>ST depression had moderate correlation.</li>
-<li>Most features showed low multicollinearity, reducing risk of instability in Logistic Regression.</li>
-</ul>
 
 </details>
 
 ---
-## Data Preprocessing
 
-Before training the models, the dataset was prepared to ensure compatibility with machine learning algorithms.
-
-### Steps Performed
-
-- Verified absence of missing values  
-- Confirmed correct encoding of categorical variables  
-- Separated features and target variable  
-- Performed train-test split  
-
-```python
-from sklearn.model_selection import train_test_split
-
-X = df.drop("heart_disease_present", axis=1)
-y = df["heart_disease_present"]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
-```
-
-The dataset was split into training and testing sets to evaluate generalization performance.
-
-No scaling was required for tree-based models, while Logistic Regression handled the feature distributions appropriately for this dataset.
-
----
-## Modeling
+# Modeling
+<span id="modeling"></span>
 
 ### Logistic Regression (Baseline)
 
-Logistic Regression was selected as the baseline model due to its interpretability and suitability for binary classification problems in healthcare.
+Logistic Regression was used as the baseline model because of its interpretability and suitability for binary classification in healthcare datasets.
 
-```python
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
+Results:
 
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, y_train)
-
-y_pred = model.predict(X_test)
-y_prob = model.predict_proba(X_test)[:, 1]
-
-accuracy = accuracy_score(y_test, y_pred)
-precision = precision_score(y_test, y_pred)
-recall = recall_score(y_test, y_pred)
-roc_auc = roc_auc_score(y_test, y_prob)
-```
-
-### Results
-
-- **Accuracy:** 0.89  
-- **Precision:** 0.80  
-- **Recall:** 1.00  
-- **ROC-AUC:** 0.96  
-
-### Interpretation
-
-The model achieved perfect recall, meaning all positive heart disease cases in the test set were correctly identified.
-
-In medical applications, recall is especially important because missing a true positive case can have serious consequences.
-
-The high ROC-AUC score (0.96) indicates strong discriminative ability between positive and negative classes.
+- Accuracy: **0.89**
+- Precision: **0.80**
+- Recall: **1.00**
+- ROC-AUC: **0.96**
 
 ---
 
-### Logistic Regression (Stability Check)
+### Random Forest
 
-To verify robustness, the model was retrained using a different random state during train-test split.
+Random Forest was trained to evaluate ensemble performance.
 
-```python
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=7
-)
+Results:
 
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, y_train)
-
-y_pred = model.predict(X_test)
-y_prob = model.predict_proba(X_test)[:, 1]
-```
-
-### Results
-
-- **Accuracy:** 0.83  
-- **Precision:** 0.77  
-- **Recall:** 0.875  
-- **ROC-AUC:** 0.94  
-
-### Interpretation
-
-Performance remained strong across different data splits.  
-Although metrics slightly decreased, ROC-AUC remained high, indicating the model generalizes reasonably well.
-
-This confirms that the baseline model performance was not due to a favorable train-test split.
+- Accuracy: **0.86**
+- Precision: **0.79**
+- Recall: **0.94**
+- ROC-AUC: **0.93**
 
 ---
 
-### Threshold Tuning
+### XGBoost
 
-By default, Logistic Regression classifies probabilities above 0.5 as positive. However, in healthcare applications, adjusting the decision threshold can improve recall while maintaining acceptable precision.
+Gradient boosting was also evaluated.
 
-Instead of relying on the default threshold, predicted probabilities were analyzed:
+Results:
 
-```python
-import numpy as np
-
-threshold = 0.4
-y_pred_adjusted = (y_prob >= threshold).astype(int)
-```
-
-Different thresholds were evaluated to balance recall and precision.
-
-### Why Threshold Tuning Matters
-
-- A lower threshold increases recall (fewer missed disease cases).  
-- A higher threshold increases precision (fewer false alarms).  
-- In medical contexts, recall is often prioritized to reduce the risk of missing high-risk patients.
-
-The analysis confirmed that Logistic Regression maintains strong performance even when adjusting classification thresholds, reinforcing its suitability for clinical screening applications.
+- Accuracy: **0.86**
+- Precision: **0.79**
+- Recall: **0.94**
+- ROC-AUC: **0.93**
 
 ---
 
-### Random Forest (Base Model)
+# Model Comparison
+<span id="comparison"></span>
 
-A Random Forest classifier was trained to compare ensemble performance against Logistic Regression.
+<label><strong>Select Metric:</strong></label>
 
-```python
-from sklearn.ensemble import RandomForestClassifier
+<select id="metricSelect">
+<option value="accuracy">Accuracy</option>
+<option value="precision">Precision</option>
+<option value="recall">Recall</option>
+<option value="roc_auc">ROC-AUC</option>
+</select>
 
-rf_model = RandomForestClassifier(random_state=42)
-rf_model.fit(X_train, y_train)
-
-y_pred = rf_model.predict(X_test)
-y_prob = rf_model.predict_proba(X_test)[:, 1]
-```
-
-### Results
-
-- **Accuracy:** 0.86  
-- **Precision:** 0.79  
-- **Recall:** 0.94  
-- **ROC-AUC:** 0.93  
-
-### Interpretation
-
-Random Forest performed well, achieving high recall and strong ROC-AUC.  
-
-However, it did not outperform Logistic Regression in overall discriminative ability.  
-
-While ensemble models can capture nonlinear patterns, in this dataset the simpler linear model generalized better.
-
----
-
-### Random Forest (Tuned Model)
-
-Hyperparameters were adjusted to improve model performance and reduce potential overfitting.
-
-```python
-rf_tuned = RandomForestClassifier(
-    n_estimators=200,
-    max_depth=5,
-    random_state=42
-)
-
-rf_tuned.fit(X_train, y_train)
-
-y_pred = rf_tuned.predict(X_test)
-y_prob = rf_tuned.predict_proba(X_test)[:, 1]
-```
-
-### Results
-
-- **Accuracy:** 0.81  
-- **Precision:** 0.71  
-- **Recall:** 0.94  
-- **ROC-AUC:** 0.94  
-
-### Interpretation
-
-Tuning did not significantly improve performance compared to the base Random Forest model.  
-
-In fact, overall accuracy and precision decreased slightly, while ROC-AUC remained similar.
-
-This reinforces an important insight: increasing model complexity does not always lead to better performance, especially with smaller datasets.
-
----
-
-### XGBoost (Base Model)
-
-An XGBoost classifier was trained to evaluate gradient boosting performance on the dataset.
-
-```python
-from xgboost import XGBClassifier
-
-xgb_model = XGBClassifier(
-    use_label_encoder=False,
-    eval_metric="logloss",
-    random_state=42
-)
-
-xgb_model.fit(X_train, y_train)
-
-y_pred = xgb_model.predict(X_test)
-y_prob = xgb_model.predict_proba(X_test)[:, 1]
-```
-
-### Results
-
-- **Accuracy:** 0.86  
-- **Precision:** 0.79  
-- **Recall:** 0.94  
-- **ROC-AUC:** 0.93  
-
-### Interpretation
-
-XGBoost achieved performance comparable to Random Forest.  
-
-However, it did not exceed the ROC-AUC achieved by Logistic Regression.  
-
-Given the small dataset size, the added complexity of boosting did not provide significant gains over the simpler baseline model.
-
----
-
-## Model Comparison
-
-The following table summarizes the performance of all evaluated models across key evaluation metrics.
-
-| Model | Accuracy | Precision | Recall | ROC-AUC |
-|-------|----------|-----------|--------|---------|
-| Logistic Regression | 0.89 | 0.80 | 1.00 | 0.96 |
-| Logistic Regression (Stability Check) | 0.83 | 0.77 | 0.875 | 0.94 |
-| Random Forest (Base) | 0.86 | 0.79 | 0.94 | 0.93 |
-| Random Forest (Tuned) | 0.81 | 0.71 | 0.94 | 0.94 |
-| XGBoost (Base) | 0.86 | 0.79 | 0.94 | 0.93 |
-
-<div style="margin-top:30px;">
-    <label><strong>Select Metric:</strong></label>
-    <select id="metricSelect">
-        <option value="accuracy">Accuracy</option>
-        <option value="precision">Precision</option>
-        <option value="recall">Recall</option>
-        <option value="roc_auc">ROC-AUC</option>
-    </select>
-
-    <div class="chart-box" style="margin-top:25px;">
-        <div id="modelChart"></div>
-    </div>
+<div class="chart-box">
+<div id="modelChart"></div>
 </div>
 
 ---
 
-### Final Model Selection
+# Feature Importance
 
-Logistic Regression was selected as the final model based on the following:
-
-- Highest **ROC-AUC (0.96)**  
-- Perfect **Recall (1.00)**  
-- Strong generalization across different random states  
-- Simplicity and interpretability  
-
-In healthcare applications, recall is critical because missing a positive heart disease case can have serious consequences.
-
-Although ensemble models performed well, they did not surpass Logistic Regression in overall discriminative ability. Additionally, Logistic Regression provides greater interpretability, which is valuable in clinical decision-making environments.
-
----
-
-## Feature Importance
-
-<div class="chart-box" style="margin-top:25px;">
-    <div id="featureImportanceChart"></div>
+<div class="chart-box">
+<div id="featureImportanceChart"></div>
 </div>
 
-Feature importance was analyzed using Logistic Regression coefficients to understand which variables contributed most to prediction.
+Key influential predictors:
 
-```python
-importance_df = pd.DataFrame({
-    "feature": X.columns,
-    "coefficient": model.coef_[0]
-}).sort_values(by="coefficient", ascending=False)
+- num_major_vessels
+- oldpeak_eq_st_depression
+- chest pain types
+- age
 
-importance_df
-```
-
-### Key Insights
-
-- **num_major_vessels** emerged as one of the strongest predictors.  
-- **oldpeak_eq_st_depression** showed significant positive influence.  
-- Chest pain type indicators contributed meaningfully to prediction.  
-- Age had moderate impact.  
-
-Using Logistic Regression allowed direct interpretation of coefficients, making the model suitable for healthcare settings where explainability is essential.
-
-Unlike black-box ensemble models, coefficient-based interpretation provides transparency in understanding patient risk factors.
+These variables demonstrated strong influence on prediction probability.
 
 ---
 
-## Hospital Recommendations
+# Conclusion
+<span id="conclusion"></span>
 
-Based on the model findings, the following recommendations can support clinical decision-making:
+Logistic Regression emerged as the best performing model for this dataset.
 
-- Patients with higher **num_major_vessels** should be prioritized for further cardiac evaluation.  
-- Individuals showing **exercise-induced angina** should receive closer monitoring.  
-- Elevated **ST depression** values during stress testing should be flagged for risk assessment.  
-- The model can be deployed as a **screening support tool**, assisting physicians in identifying high-risk patients earlier.
+Final performance:
 
-It is important to emphasize that this model is not intended to replace clinical diagnosis, but rather to augment early detection efforts and improve preventive care strategies.
+- ROC-AUC: **0.96**
+- Recall: **1.00**
+- Accuracy: **0.89**
 
----
-
-## Challenges Faced
-
-- The dataset contained only **180 observations**, limiting model generalization.  
-- Small sample size increased the risk of overfitting in complex ensemble models.  
-- Balancing recall and precision required careful threshold tuning.  
-- Limited feature diversity restricted the ability to capture broader cardiovascular risk factors.
-
-Despite these limitations, the project demonstrates how structured modeling and careful evaluation can produce meaningful predictive insights even with constrained data.
+The results demonstrate that **simpler models can outperform complex ensemble models when the dataset size is small.**
 
 ---
 
-## Conclusion
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
-This project demonstrates that a well-structured Logistic Regression model can effectively predict heart disease using structured clinical data.
-
-Despite evaluating more complex ensemble models such as Random Forest and XGBoost, the simpler linear model achieved the strongest overall performance.
-
-Final Model Performance:
-
-- **ROC-AUC:** 0.96  
-- **Recall:** 1.00  
-- **Accuracy:** 0.89  
-
-The results highlight an important principle in machine learning: model complexity does not guarantee better performance.
-
-In this healthcare context, Logistic Regression provided:
-
-- High recall for patient safety  
-- Strong discriminative ability  
-- Interpretability suitable for clinical environments  
-
-The project reinforces the value of structured analysis, model validation, and domain-aware decision-making in medical predictive modeling.
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
