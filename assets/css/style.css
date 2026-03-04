@@ -27,12 +27,13 @@ h2, h3 {
 /* Chart containers */
 
 .chart-box {
-    background: #fafafa;
-    padding: 20px;
+    background: white;
     border-radius: 8px;
-    margin-top: 20px;
+    padding: 20px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-
 
 /* Dropdown styling */
 
@@ -67,4 +68,39 @@ details {
     padding: 15px;
     background: #f9f9f9;
     border-radius: 8px;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 25px;
+    margin-bottom: 8px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+hr {
+    border: none;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 10px 0 20px 0;
+}
+
+p {
+    line-height: 1.7;
+    font-size: 16px;
+    color: #374151;
+}
+
+ul {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 6px;
 }
