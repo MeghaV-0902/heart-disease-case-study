@@ -5,6 +5,16 @@ title: Heart Disease Prediction
 
 # Heart Disease Prediction
 
+### Machine Learning Case Study
+
+**Goal:** Predict the presence of heart disease using clinical and demographic features.
+
+**Tech Stack:** Python, Scikit-Learn, Plotly, Pandas, NumPy
+
+**Dataset Size:** 180 patients | 18 features
+
+---
+
 ## Overview
 
 This project develops and evaluates multiple machine learning models to predict the presence of heart disease using structured clinical data. The objective is to support early detection and improve preventive healthcare decision-making.
