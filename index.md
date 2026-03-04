@@ -13,6 +13,11 @@ title: Heart Disease Prediction
 
 **Dataset Size:** 180 patients | 15 features
 
+**Jump to:**  
+[Overview](#overview) • [Dataset](#dataset) • [EDA](#exploratory-data-analysis) • [Modeling](#modeling) • [Model Comparison](#model-comparison) • [Conclusion](#conclusion)
+
+---
+
 ---
 
 ## Overview
