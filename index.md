@@ -90,7 +90,9 @@ This validation step ensured that the dataset was clinically reliable before pro
     <option value="num_major_vessels">num_major_vessels</option>
 </select>
 
-<div id="univariateChart" style="margin-top:25px;"></div>
+<div class="chart-box" style="margin-top:25px;">
+    <div id="univariateChart"></div>
+</div>
 
 <p>Initial analysis focused on understanding the distribution of key numerical features.</p>
 
@@ -120,7 +122,9 @@ df.describe()
     <option value="num_major_vessels">num_major_vessels</option>
 </select>
 
-<div id="bivariateChart" style="margin-top:25px;"></div>
+<div class="chart-box" style="margin-top:25px;">
+    <div id="bivariateChart"></div>
+</div>
 
 <p>The relationship between features and the target variable <code>heart_disease_present</code> was analyzed.</p>
 
@@ -138,7 +142,9 @@ df.groupby("heart_disease_present").mean()
 <hr>
 
 <h3>Correlation Heatmap</h3>
-<div id="correlationChart" style="margin-top:25px;"></div>
+<div class="chart-box" style="margin-top:25px;">
+    <div id="correlationChart"></div>
+</div>
 
 <pre><code class="language-python">
 df.corr()
@@ -396,7 +402,9 @@ Given the small dataset size, the added complexity of boosting did not provide s
         <option value="roc_auc">ROC-AUC</option>
     </select>
 
-    <div id="modelChart" style="margin-top:25px;"></div>
+    <div class="chart-box" style="margin-top:25px;">
+        <div id="modelChart"></div>
+    </div>
 </div>
 ---
 
@@ -417,7 +425,9 @@ Although ensemble models performed well, they did not surpass Logistic Regressio
 
 ## Feature Importance
 
-<div id="featureImportanceChart" style="margin-top:30px;"></div>
+<div class="chart-box" style="margin-top:25px;">
+    <div id="featureImportanceChart"></div>
+</div>
 
 Feature importance was analyzed using Logistic Regression coefficients to understand which variables contributed most to prediction.
 
