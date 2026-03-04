@@ -167,3 +167,18 @@ summary {
 .jump-nav a:hover {
   text-decoration: underline;
 }
+.hero-banner {
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  color: white;
+  padding: 40px 50px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.hero-banner h1,
+.hero-banner h2,
+.hero-banner h3,
+.hero-banner p,
+.hero-banner strong {
+  color: white;
+}
