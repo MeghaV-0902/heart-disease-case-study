@@ -3,6 +3,8 @@ layout: default
 title: Heart Disease Prediction
 ---
 
+<div class="hero-banner">
+
 # Heart Disease Prediction
 
 ### Machine Learning Case Study
@@ -12,10 +14,17 @@ title: Heart Disease Prediction
 **Tech Stack:** Python, Scikit-Learn, Plotly, Pandas, NumPy
 
 **Dataset Size:** 180 patients | 15 features
+</div>
 
-**Jump to:**  
-[Overview](#overview) • [Dataset](#dataset) • [EDA](#exploratory-data-analysis) • [Modeling](#modeling) • [Model Comparison](#model-comparison) • [Conclusion](#conclusion)
-
+<div class="jump-nav">
+<strong>Jump to:</strong>
+<a href="#overview">Overview</a>
+<a href="#dataset">Dataset</a>
+<a href="#exploratory-data-analysis">EDA</a>
+<a href="#modeling">Modeling</a>
+<a href="#model-comparison">Model Comparison</a>
+<a href="#conclusion">Conclusion</a>
+</div>
 ---
 
 ---
