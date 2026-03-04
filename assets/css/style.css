@@ -148,3 +148,22 @@ summary {
     transform: translateY(0);
   }
 }
+.jump-nav {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  padding: 10px 15px;
+  background: #f8fafc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.jump-nav a {
+  margin-right: 12px;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.jump-nav a:hover {
+  text-decoration: underline;
+}
